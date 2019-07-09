@@ -7,13 +7,5 @@ const db = mongoose.connect(mongoURI, {useNewUrlParser: true});
 db.then(db => console.log(`Connected to: ${mongoURI}`))
   .catch(err => console.log(`Error connecting to mongo at: ${mongoURI}, Err: ${err}`));
 
-// Schema and Model
 
-const todoSchema = new mongoose.Schema({
-  id: Number,
-  task: String
-});
-
-const Todo = mongoose.model('Todo', todoSchema);
-
-module.exports = Todo;
+module.exports = db;
