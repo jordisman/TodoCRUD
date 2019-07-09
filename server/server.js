@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/../client/public'));
 
 
 app.get('/todos', getAll);
-app.post('/todo', add);
+app.post('/todos', add);
 app.delete('/todos/:id', remove);
 
 app.listen(port, () => {

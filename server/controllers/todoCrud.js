@@ -2,7 +2,7 @@ const Todo = require('../../db/models/Todo'); // require the model
 // must add the entire path include the object Todo that used in Post req
 
 exports.getAll = (req, res) => {
-  Todo.find((err, todos) => {
+  Todo.find({}, (err, todos) => {
     if (err) {res.send(err);}
     console.log(`Todos: ${todos}`);
     res.send(todos);
@@ -11,51 +11,18 @@ exports.getAll = (req, res) => {
 
 exports.add = (req, res) => {
   let { task } = req.body;
-  let todo = new Todo(req.body); //making a new obj
-  todo.save((err, todo) => {
+  let newTodo = new Todo(req.body); //making a new obj
+  newTodo.save((err, newTodo) => {
     if (err) { res.send(err); }
-    console.log(`Post new todo: ${todo}`);
-    res.send(todo);
+    console.log(`Post new todo: ${newTodo}`);
+    res.send(newTodo);
   });
 }
 
 exports.remove = (req, res) => {
-  db.collection('todo').remove({_id: req.body.id}, (err, result) => {
+  Todo.findByIdAndRemove({_id: req.body._id}, (err, data) => {
     if (err) return console.log(err);
-    console.log(req.body);
-    res.redirect('/');
+    console.log('req.body:', req.body);
+    res.send(data);
   });
 }
-
-/*
-from Kaz
-
-exports.getAll = (req, res) => {
-  Attendee.find()
-  .then((attendee) => {
-    return res.send(attendee)
-  })
-  .catch((error)=> {
-    return res.status(400).send({
-      error: error.message
-    })
-  })
-}
-
-exports.add = (req, res) => {
-  const attendee  = req.body;
-  const newAttendee = new Attendee(attendee);
-  newAttendee.save()
-  .then((attendee)=> {
-    return res.send({
-      attendee,
-    })
-  })
-  .catch((error)=> {
-    return res.status(400).send({
-      error: error.message
-    })
-  })
-}
-
-*/
