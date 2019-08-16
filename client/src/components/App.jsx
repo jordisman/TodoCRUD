@@ -11,8 +11,10 @@ class App extends React.Component {
       todos: data,
       newTodo: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.getTodos = this.getTodos.bind(this);
+    this.addTodo = this.addTodo.bind(this);
   }
 
   componentDidMount() {
@@ -29,10 +31,18 @@ class App extends React.Component {
       });
   }
 
+  addTodo() {
+    const todo = this.state.todo;
+    axios.post('/todos', todo)
+      .then(()=> {
+        console.log('post data:', res.data)
+        this.getTodos();
+      });
+  }
+
   handleChange(e) {
     e.preventDefault();
-    // const target = e.target;
-    // const value = target.value;
+    console.log('handle change works')
     this.setState({
       newTodo: e.target.value
     })
@@ -40,9 +50,22 @@ class App extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    let allTodos = this.state.todos
-    if (this.state.newTodo.length > 0) {
-      allTodos.push(this.state.newTodo)
+    console.log('Input clicked!')
+    const allTodos = this.state.todos;
+    const newTodo = this.state.newTodo;
+    const headers = {'Content-Type': 'application/json'}
+
+    if (newTodo.length > 0) {
+
+      axios.post('/todos', newTodo, {headers: headers})
+        .then(res => {
+          console.log('post data:', res.data)
+          this.getTodos();
+        })
+        .catch(err => {
+          console.log('fail to post:', err);
+        })
+      allTodos.push(this.state.newTodo);
     }
     this.setState({
       todos: allTodos
@@ -56,7 +79,8 @@ class App extends React.Component {
         Can you see me?
         <NewTodo todos={this.state.todos}
           handleChange={this.handleChange}
-          handleClick={this.handleClick} />
+          handleClick={this.handleClick}
+          addTodo={this.addTodo} />
         <TodoList todos={this.state.todos} />
       </div>
     )

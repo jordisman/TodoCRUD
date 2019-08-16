@@ -3,12 +3,14 @@ import React from 'react';
 
 const TodoItem = ({todo}) => {
 // if you wanna use console.log, must use {}
-  console.log('todo in TodoItem =', todo)
+  // console.log('todo in TodoItem =', todo)
   return (
     <div>
       {todo.task}
     </div>
 )}
+
+export default TodoItem;
 
 // class TodoItem extends React.Component {
 //   constructor(props) {
@@ -44,4 +46,3 @@ const TodoItem = ({todo}) => {
 //   }
 // }
 
-export default TodoItem;

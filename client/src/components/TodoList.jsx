@@ -14,6 +14,3 @@ const TodoList = ({ todos }) => {
 
 export default TodoList;
 
-/*
-    console.log('props in todoList =', props)
-*/

@@ -1,6 +1,7 @@
 const Todo = require('../../db/models/Todo'); // require the model
 // must add the entire path include the object Todo that used in Post req
 
+// Get all tasks
 exports.getAll = (req, res) => {
   Todo.find({}, (err, todos) => {
     if (err) {res.send(err);}
@@ -9,6 +10,10 @@ exports.getAll = (req, res) => {
   });
 }
 
+// Get one task
+// exports.getOne = (req, res) => {
+//   Todo.findOne({ _id:})
+// }
 exports.add = (req, res) => {
   let { task } = req.body;
   let newTodo = new Todo(req.body); //making a new obj
